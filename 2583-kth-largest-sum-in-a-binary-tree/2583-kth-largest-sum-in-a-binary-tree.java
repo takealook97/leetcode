@@ -28,8 +28,6 @@ class Solution {
             pq.add(i);
         }
 
-        System.out.println(pq);
-
         if(pq.size() < k) {
             return -1;
         }

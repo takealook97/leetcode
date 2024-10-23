@@ -22,16 +22,20 @@ class Solution {
     public long kthLargestLevelSum(TreeNode root, int k) {
         sum = new long[MAX];
         search(k, root, 0);
-        Arrays.sort(sum);
-
-        int cnt = 0;
+        PriorityQueue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
         for(long i : sum) {
-            cnt++;
+            if(i == 0) break;
+            pq.add(i);
+        }
 
-            if(cnt == MAX - k + 1) {
-                answer = i;
-                break;
-            }
+        System.out.println(pq);
+
+        if(pq.size() < k) {
+            return -1;
+        }
+
+        while(k-- > 0) {
+            answer = pq.poll();
         }
 
         return answer;

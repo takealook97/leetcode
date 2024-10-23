@@ -21,7 +21,7 @@ class Solution {
 
     public long kthLargestLevelSum(TreeNode root, int k) {
         sum = new long[MAX];
-        search(k, root, 0);
+        search(root, 0);
         PriorityQueue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
         for(long i : sum) {
             if(i == 0) break;
@@ -39,15 +39,15 @@ class Solution {
         return answer;
     }
 
-    static void search(int target, TreeNode now, int depth) {
+    static void search(TreeNode now, int depth) {
         sum[depth] += now.val;
 
         if (now.left != null) {
-            search(target, now.left, depth + 1);
+            search(now.left, depth + 1);
         }
 
         if (now.right != null) {
-            search(target, now.right, depth + 1);
+            search(now.right, depth + 1);
         }
     }
 }

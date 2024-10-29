@@ -13,8 +13,8 @@ class Solution {
         }
 
         int nextY, nextX;
-        for(int nowY = 0; nowY < N; nowY++) {
-            for(int nowX = 0; nowX < M; nowX++) {
+        for(int nowX = 0; nowX < M; nowX++) {
+            for(int nowY = 0; nowY < N; nowY++) {
                 if(dp[nowY][nowX] <= 0) {
                     continue;
                 }
@@ -28,23 +28,6 @@ class Solution {
                     }
                 }
             }
-        }
-
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < M; j++) {
-                System.out.print(grid[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println();
-        System.out.println();
-
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < M; j++) {
-                System.out.print(dp[i][j] + " ");
-            }
-            System.out.println();
         }
 
         return answer - 1;

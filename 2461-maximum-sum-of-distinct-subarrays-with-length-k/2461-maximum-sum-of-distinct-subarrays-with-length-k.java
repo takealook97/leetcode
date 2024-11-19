@@ -1,53 +1,24 @@
 class Solution {
     public long maximumSubarraySum(int[] nums, int k) {
-        int N = nums.length, len = 0;
-        long answer = 0;
-        for (int num : nums) {
-            len = Math.max(len, num);
-        }
+        int len = nums.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        long answer = 0, sum = 0;
 
-        int[] arr = new int[len + 1];
-
-        int lo = 0, hi = k - 1;
-        long sum = 0;
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i <= hi; i++) {
-            arr[nums[i]]++;
-            if(arr[nums[i]] > 1) {
-                if(!list.contains(nums[i])) {
-                    list.add(nums[i]);
-                }
-            }
-            sum += nums[i];
-        }
-
-        if(list.isEmpty()) {
-            answer = Math.max(answer, sum);
-        }
-
-        
-        while (true) {        
-            arr[nums[lo]]--;
-            sum -= nums[lo];
-            if(arr[nums[lo]] <= 1) {
-                list.remove(Integer.valueOf(nums[lo]));
-            }
-
-            lo++;
-            hi++;
-            if(hi >= N) {
-                break;
-            }
-
-            arr[nums[hi]]++;
+        int lo = 0;
+        for (int hi = 0; hi < len; hi++) {
+            map.put(nums[hi], map.getOrDefault(nums[hi], 0) + 1);
             sum += nums[hi];
-            if(arr[nums[hi]] > 1) {
-                if(!list.contains(nums[hi])) {
-                    list.add(nums[hi]);
+
+            if (hi - lo + 1 > k) {
+                map.put(nums[lo], map.get(nums[lo]) - 1);
+                if (map.get(nums[lo]) == 0) {
+                    map.remove(nums[lo]);
                 }
+                sum -= nums[lo];
+                lo++;
             }
 
-            if (list.isEmpty()) {
+            if (hi - lo + 1 == k && map.size() == k) {
                 answer = Math.max(answer, sum);
             }
         }

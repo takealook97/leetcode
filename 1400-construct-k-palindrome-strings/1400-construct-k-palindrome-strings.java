@@ -11,11 +11,8 @@ class Solution {
             count[c - 'a']++;
         }
 
-        int evenCount = 0;
         int oneCount = 0;
-
         for (int i : count) {
-            evenCount += (i / 2);
             oneCount += (i % 2);
         }
 

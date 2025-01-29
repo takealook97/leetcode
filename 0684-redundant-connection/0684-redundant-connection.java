@@ -1,56 +1,44 @@
-import java.util.*;
-
 class Solution {
-    static boolean isLoop;
-    static ArrayList<Integer>[] listArr;
-    static ArrayList<Integer> path;
-    static boolean[] visited;
+    static int len;
+    static int[] parent;
 
     public int[] findRedundantConnection(int[][] edges) {
-        int len = edges.length;
-
-        listArr = new ArrayList[len + 1];
-        for (int i = 1; i <= len; i++) {
-            listArr[i] = new ArrayList<>();
-        }
+        len = edges.length;
+        
+        make();
 
         for (int[] edge : edges) {
-            int u = edge[0], v = edge[1];
-
-            visited = new boolean[len + 1];
-            path = new ArrayList<>();
-            isLoop = false;
-
-            if (!listArr[u].isEmpty() && !listArr[v].isEmpty()) {
-                if (find(u, -1, v)) {
-                    return edge;
-                }
+            if (!union(edge[0], edge[1])) {
+                return edge;
             }
-
-            listArr[u].add(v);
-            listArr[v].add(u);
         }
 
         return null;
     }
 
-    static boolean find(int now, int parent, int target) {
-        if (now == target) {
-            isLoop = true;
-            path.add(now);
+    static void make() {
+        parent = new int[len + 1];
+        for (int i = 1; i <= len; i++) {
+            parent[i] = i;
+        }
+    }
+
+    static boolean union(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x != y) {
+            parent[y] = x;
             return true;
         }
 
-        visited[now] = true;
-        for (int next : listArr[now]) {
-            if (next == parent) continue;
-            if (!visited[next]) {
-                if (find(next, now, target)) {
-                    path.add(now);
-                    return true;
-                }
-            }
-        }
         return false;
+    }
+
+    static int find(int x) {
+        if (x == parent[x]) {
+            return x;
+        }
+
+        return parent[x] = find(parent[x]);
     }
 }

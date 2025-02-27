@@ -2,7 +2,7 @@ class Solution {
     public int lenLongestFibSubseq(int[] arr) {
         int len = arr.length;
         Map<Integer, Integer> map = new HashMap<>();
-        Map<Integer, Integer> dp = new HashMap<>();
+        int[][] dp = new int[len][len];
         int answer = 0;
 
         for (int i = 0; i < len; i++) {
@@ -10,17 +10,14 @@ class Solution {
         }
 
         for (int i = 0; i < len; i++) {
-            for (int j = i + 1; j < len; j++) {
-                int x = arr[i], y = arr[j];
-                int count = 2;
-                
-                while (map.containsKey(x + y)) {
-                    int next = x + y;
-                    x = y;
-                    y = next;
-                    count++;
+            for (int j = 0; j < i; j++) {
+                int k = map.getOrDefault(arr[i] - arr[j], -1);
 
-                    answer = Math.max(answer, count);
+                if (k >= 0 && k < j) {
+                    dp[j][i] = dp[k][j] + 1;
+                    answer = Math.max(answer, dp[j][i]);
+                } else {
+                    dp[j][i] = 2;
                 }
             }
         }

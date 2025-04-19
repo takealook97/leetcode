@@ -4,15 +4,15 @@ class Solution {
 
     public long countFairPairs(int[] nums, int lower, int upper) {
         len = nums.length;
+        this.nums = nums;
+        
         if (len <= 1) {
             return 0;
         }
 
-        this.nums = nums;
         Arrays.sort(nums);
 
         long answer = 0;
-        System.out.println(Arrays.toString(nums));
         for (int i = 0; i < len - 1; i++) {
             int lowerIdx = lowerBound(i + 1, lower - nums[i]);
             int upperIdx = upperBound(i + 1, upper - nums[i]);

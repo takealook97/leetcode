@@ -1,26 +1,22 @@
 class Solution {
     public String makeFancyString(String s) {
-        Set<Integer> set = new HashSet<>();
-        int len = s.length(), count = 1;
-        char prev = s.charAt(0), cur;
-        for(int i = 1; i < len; i++) {
-            cur = s.charAt(i);
-            if (prev == cur) {
-                count++;
-                if(count >= 3) {
-                    set.add(i);
+        StringBuilder sb = new StringBuilder();
+        int len = s.length();
+        int lo = 0, hi = 0;
+        char l, h;
+        while (hi < len) {
+            l = s.charAt(lo);
+            h = s.charAt(hi);
+            if (h == l) {
+                if (hi - lo < 2) {
+                    sb.append(h);
                 }
             } else {
-                prev = cur;
-                count = 1;
+                sb.append(h);
+                lo = hi;
             }
-        }
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            if(!set.contains(i)) {
-                sb.append(s.charAt(i));
-            }
+            hi++;
         }
 
         return sb.toString();
